@@ -46,8 +46,125 @@
       
         <!-- MAIN CONTENT -->
         <div class="container mt-5">
-            <!-- INTRO -->
-            <h2 class="mb-4">Coming soon ...</h2>
+          <!-- INTRO -->
+          <h2 class="mb-4">RoPE: Rotary Position Embedding</h2>
+          <h6>
+            <a href="https://arxiv.org/pdf/2104.09864.pdf">Paper</a> 
+            | Roformer: Enhanced Transformer with Rotary Position Embedding
+          </h6>
+          <hr>
+
+          <div class="container">
+            <h3 class="mt-5">What is RoPE?</h3>
+            <p>
+              <ul>
+                <li>A technique used to <b>encode positional information</b> of tokens in the input sequence of Transformer-based language models</li>
+                <li>Essential for understanding the <b>order</b> and meaning of tokens in large language models (e.g. GPT-3, BERT, etc.)</li>
+                <li>The self-attention mechanism used in Transformers does <b>not</b> inherently capture the positional information of tokens</li>
+              </ul>
+            </p>
+
+            <h3>Why is RoPE used?</h3>
+              <ul>
+                <li>
+                  Overcomes limitations of <i>fixed</i> and <i>learned</i> positional embeddings
+                  <ul>
+                    <li><i>Fixed</i> positional embeddings are predefined vectors that are added to the token embeddings at the input layer, 
+                      encoding the position of each token in the sequence
+                    </li>
+                    <li><i>Learned</i> positional embeddings are trainable vectors that are learned during the model training process,
+                      allowing the model to capture more complex positional patterns
+                    </li>
+                  </ul>
+                </li>
+                <li><b>Efficiency</b>: Saves memory usage and computation. It does not require storing or learning separate 
+                    positional embeddings for each position in the sequence. This is particularly beneficial for long sequences or very 
+                    large vocabularies</li>
+                <li><b>Generalization</b>: Can generalize to sequence lengths longer than those seen during training, as the sinusoidal encodings 
+                  can be computed on-the-fly for any position. Fixed and learned positional embeddings are limited to the 
+                  maximum sequence length seen during training</li>
+                <li><b>Relative Positional Information</b>: Can capture relative positional information between tokens, which is useful for tasks 
+                    like machine translation or language generation, where the relative position of tokens is important</li>
+                <li><b>Performance</b>: Has shown improved performances on various natural language processing tasks, 
+                    particularly for long sequences or tasks that require capturing long-range dependencies.</li>
+              </ul>
+
+            <div class="callout info my-4">
+              💡 Overall, RoPE is a more efficient and effective way of encoding positional information in large language models, 
+              providing better generalization, capturing relative positional information, and improving model performance, especially 
+              for long sequences or tasks that require capturing long-range dependencies.
+            </div>
+
+            <h3>How does RoPE work?</h3>
+              <u>Steps in RoPE</u>
+                <ol>
+                  <li><b>Initialize Frequency Array</b>: 
+                  Array of frequencies initialized using an exponential scaling function.
+                  These frequencies serve as rotation factors
+                  </li>
+
+                  <li><b>Position-Based Scaling</b>: 
+                  Positions of tokens in the sequence are scaled by the frequency array.
+                  Scaled positions are used for rotating the embeddings (instead of addition)
+                  </li>
+
+                  <li><b>Construct Rotary Matrix</b>:
+                  Rotary matrix created by stacking sine and cosine values of scaled angles.
+                  This matrix is used to rotate the original embeddings
+                  </li>
+
+                  <li><b>Rotate Embeddings</b>:
+                  Rotary matrix reshaped to match the model's embedding dimension.
+                  Reshaped matrix multiplied with original <i>query</i> and <i>key</i> embeddings.
+                  Embeddings rotated based on their positions
+                  </li>
+                </ol>
+
+              <u>Key Aspects of RoPE</u>
+                <ul>
+                  <li><b>Variable Rotation Speed</b>:
+                  Different dimensions in embeddings rotated at different speeds (determined by frequencies).
+                  Can be visualized as different clock hands rotating at distinct speeds
+                  </li>
+
+                  <li><b>Dot Product Significance</b>:
+                  Embeddings rotated to similar angles have high dot product (indicating positional closeness).
+                  Dot product diminishes as relative distance increases (encoding relative positional information)
+                  </li>
+
+                  <li><b>Flexible Sequence Lengths</b>:
+                  Can generalize to arbitrary sequence lengths by rotating embeddings accordingly
+                  (unlike fixed positional embeddings)
+                  </li>
+
+                  <li><b>Relative Position Encoding</b>:
+                  Naturally incorporates relative position information into self-attention mechanism.
+                  Enables capturing dependencies between tokens based on their relative positions
+                  </li>
+                </ul>
+
+              <img class="my-4" src="/notes/2024-05-12-rope/rope-formula.png" width="600" height="200">
+
+            <h3>Conclusion</h3>
+              <ul>
+                <li>Really enjoyed the paper: clear and rigorous mathematical proofs</li>
+              </ul>
+
+              A few final words from the authors:
+              <div class="callout quote">
+                "Despite the fact that we mathematically format the relative position relations as rotations under 2D sub-spaces, 
+                there lacks of thorough explanations on why it converges faster than baseline models that incorporates other position 
+                encoding strategies."
+              </div>
+              <div class="callout quote">
+                "Although we have proved that our model has favourable property of long-term decay for intern-token products, 
+                which is similar to the existing position encoding mechanisms, our model shows superior performance on long texts 
+                than peer models, we have not come up with a faithful explanation."
+              </div>
+
+              
+            
+          </div>
         </div>
 
         <!-- FOOTER -->
