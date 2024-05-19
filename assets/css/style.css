@@ -28,6 +28,7 @@ a:hover {
 
 /* bigger interline for posts */
 .article {
+    color: #3b3b3b;
     line-height: 2;
 }
 
