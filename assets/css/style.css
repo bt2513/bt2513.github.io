@@ -28,6 +28,9 @@ a:hover {
 
 * {
     color: #3b3b3b;
+}
+
+.article {
     line-height: 2;
 }
 
@@ -61,7 +64,7 @@ a:hover {
 
 /* Callout variations */
 .callout.info {
-    background-color: #e6f7ff;
+    background-color: #E5E4E2;
     border-color: white;
 }
 
