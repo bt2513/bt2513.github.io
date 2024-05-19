@@ -111,7 +111,7 @@
                         <li><code>N</code> is also equivalent to <code>seq_len</code> for the Transformer architecture</li>
                     </ul>
                     <li>Similar to BERT's <code>[CLASS]</code> token, a <b>learnable embedding</b> is prepended to the sequence of embedded patches 
-                        (as indicated by <code>0*</code> on the image above)
+                        (as indicated by <code>0*</code> on the image above). It is randomly initialized and the same vector is used for all images
                     </li>
                     <li>The output of the Transformer encoder for this position serves as the overall image representation and a classification head is attached to this position</li>
                     <li>Position embeddings are added to the patch embeddings  to retain positional information, similar to the use of Word Position Embeddings, <code>wpe</code> in the Transformer</li>
