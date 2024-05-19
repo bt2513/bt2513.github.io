@@ -3,6 +3,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
+    color: #3b3b3b;
 }
 
 .container {
@@ -28,7 +29,6 @@ a:hover {
 
 /* bigger interline for posts */
 .article {
-    color: #3b3b3b;
     line-height: 2;
 }
 
