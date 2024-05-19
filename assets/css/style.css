@@ -26,10 +26,7 @@ a:hover {
     margin-bottom: 2rem;
 }
 
-* {
-    color: #3b3b3b;
-}
-
+/* bigger interline for posts */
 .article {
     line-height: 2;
 }
