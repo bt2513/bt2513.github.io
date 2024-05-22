@@ -15,95 +15,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/assets/css/style.css">
-        <style>
-                    body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
-            color: #3b3b3b;
-        }
-
-        .container {
-            flex: 1;
-        }
-
-        .footer {
-            padding: 1rem 0;
-        }
-
-        a {
-            text-decoration: inherit;
-            color: inherit;
-        }
-        a:hover {
-            color: #685bc7;
-        }
-
-        .post{
-            margin-top: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        /* bigger interline for posts */
-        .article {
-            line-height: 2;
-        }
-
-        .callout {
-            padding: 16px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .callout::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 4px;
-            background-color: #666;
-        }
-        
-        .callout-title {
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .callout-content {
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        /* Callout variations */
-        .callout.info {
-            background-color: #E5E4E2;
-            border-color: white;
-        }
-
-        .callout.quote {
-            background-color: white;
-            border-color: white;
-            font-style: italic;
-        }
-
-        .callout.quote::before {
-            background-color: #3b3b3b;
-        }
-
-        .callout.warning {
-            background-color: #fff3cd;
-            border-color: #ffeeba;
-        }
-
-        .callout.error {
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
-        }
-        </style>
     </head>
 
     <body>
@@ -171,10 +82,10 @@
                               <tr>
                                 <th scope="col"><code>n_layers</code></th>
                                 <th scope="col"><code>n_heads</code></th>
-                                <th scope="col"><code>hidden_size</code></th>
+                                <th scope="col"><code>head_size</code></th>
                                 <th scope="col"><code>embedding_size</code></th>
                                 <th scope="col"><code>d_model</code></th>
-                                <th scope="col"><code>mlp_dim</code></th>
+                                <th scope="col"><code>ff_dim</code></th>
                               </tr>
                             </thead>
                             <tbody>
@@ -210,11 +121,11 @@
                 </p>
                 <h6>Steps</h6>
                 <div class="row">
-                    <div class="col-sm">
-                    <p><img src="/notes/2024-05-21-transformer/attention-matrix-1.png" class="img-fluid"></p>
+                    <div class="col-sm d-flex justify-content-center align-items-center">
+                    <p><img src="/notes/2024-05-21-transformer/attention-matrix-1.png" class="img-fluid" style="max-height: 400px;"></p>
                     </div>
-                    <div class="col-sm">
-                        <p><img src="/notes/2024-05-21-transformer/attention-matrix-2.png" class="img-fluid" width="80%"></p>
+                    <div class="col-sm d-flex justify-content-center align-items-center">
+                        <p><img src="/notes/2024-05-21-transformer/attention-matrix-2.png" class="img-fluid" width="80%" style="max-height: 400px;"></p>
                     </div>
                 </div>
                 1. Create three vectors from each of the encoder's input vectors (e.g. embedding of each word)</li>
@@ -225,10 +136,12 @@
                         self-attention calculation
                     </li>    
                 </ul>
+                <p>
                 <div class="callout info">
                     These vectors are smaller in dimension than the embedding vector: this is an architecture choice to make the 
                     computation of multiheaded attention (mostly) <b>constant</b>
                 </div>
+                </p>
                 2. Calculate attention scores <code>Q^K</code></li>
                 <ul>
                     <li>The attention scores determine how much importance or relevance to assign to other words in the input sentence 
@@ -338,10 +251,10 @@
                     <li>The "encoder-decoder attention" layer computes attention scores between the <b>decoder's queries</b> and the <b>encoder's key-value</b> pairs</li>
                 </ul>
                 <div class="row">
-                    <div class="col-sm">
+                    <div class="col-sm d-flex justify-content-center">
                         <p><video src="https://raw.githubusercontent.com/bt2513/bt2513.github.io/main/notes/2024-05-21-transformer/decoder-1.mov" class="img-fluid" controls></video></p>
                     </div>
-                    <div class="col-sm">
+                    <div class="col-sm d-flex justify-content-center">
                         <p><video src="https://raw.githubusercontent.com/bt2513/bt2513.github.io/main/notes/2024-05-21-transformer/decoder-2.mov" class="img-fluid" controls></video></p>
                     </div>
                 </div>
@@ -354,12 +267,13 @@
                     <li>The word corresponding to the highest probability in the softmax output can be chosen as the predicted output for the current time step (greedy approach)</li>
                     <li>Otherwise, the probability distribution can be used for <b>Beam Search</b> for a more sophisticated and higher quality generation!</li>
                 </ul>
+            
                 <div class="row">
-                    <div class="col-sm-7">
-                        <p><img src="/notes/2024-05-21-transformer/final-layer.png" class="img-fluid"></p>
+                    <div class="col-sm d-flex justify-content-center align-items-center">
+                        <img src="/notes/2024-05-21-transformer/final-layer.png" class="img-fluid" style="max-height: 400px;">
                     </div>
-                    <div class="col-sm">
-                        <p><img src="/notes/2024-05-21-transformer/output-example.png" class="img-fluid"></p>
+                    <div class="col-sm d-flex justify-content-center align-items-center">
+                        <img src="/notes/2024-05-21-transformer/output-example.png" class="img-fluid" style="max-height: 400px;">
                     </div>
                 </div>
 
