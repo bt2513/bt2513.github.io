@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bertrand's Notes</title>
+        <meta name="description" content="Notes & Thoughts">
+        <meta name="author" content="Bertrand Thia">
+        <link rel="canonical" href="https://bt2513.github.io/" />
+        <link rel="icon" href="/assets/img/corgi-icon.svg">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/assets/css/style.css">
+        <style>
+                    body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            color: #3b3b3b;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .footer {
+            padding: 1rem 0;
+        }
+
+        a {
+            text-decoration: inherit;
+            color: inherit;
+        }
+        a:hover {
+            color: #685bc7;
+        }
+
+        .post{
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* bigger interline for posts */
+        .article {
+            line-height: 2;
+        }
+
+        .callout {
+            padding: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .callout::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 4px;
+            background-color: #666;
+        }
+        
+        .callout-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .callout-content {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Callout variations */
+        .callout.info {
+            background-color: #E5E4E2;
+            border-color: white;
+        }
+
+        .callout.quote {
+            background-color: white;
+            border-color: white;
+            font-style: italic;
+        }
+
+        .callout.quote::before {
+            background-color: #3b3b3b;
+        }
+
+        .callout.warning {
+            background-color: #fff3cd;
+            border-color: #ffeeba;
+        }
+
+        .callout.error {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        }
+        </style>
+    </head>
+
+    <body>
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-lg">
+          <div class="container">
+            <a class="navbar-brand" href="https://bt2513.github.io/"><img src="/assets/img/corgi-icon.svg" alt="Bertrand's Notes" width="30" height="30"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/bt2513" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.linkedin.com/in/bertrand-thia/" target="_blank">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+        </nav>
+      
+        <!-- MAIN CONTENT -->
+        <div class="container mt-5">
+            <!-- INTRO -->
+            <h2 class="mb-4">🚍 The Transformer Architecture</h2>
+            <h6>
+            <a href="https://arxiv.org/pdf/1706.03762"><u>Paper</u></a> 
+            | Attention is All You Need
+            </h6>
+            <hr>
+            <!-- CONTENT -->
+            <div class="container article">
+                <i>My notes draw extensively from the visual explanations and illustrations provided in the excellent blog post <a href="https://jalammar.github.io/illustrated-transformer/"><u>The Illustrated Transformer</u></a></i>
+                <h3 class="mt-4">What is the Transformer?</h3>
+                <ul>
+                    <li>The paper introduces a novel SOTA architecture for machine translation applications, the Transformer model</li>
+                    <li>This model surpasses the existing best results at a <b>fraction</b> of the training costs required by the best models</li>
+                    <li>This achievement is possible due to the use of <b>attention mechanisms only</b>, which enable <b>reduced sequential</b> computations and <b>increased parallelization</b></li>
+                    <li>The researchers demonstrate it can generalize well to other tasks, thereby showcasing its <b>language understanding</b> capabilities</li>
+                </ul>
+                <h3>Model Architecture</h3>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <ul>
+                            <li>The Transformer model is composed of an <b>encoder</b> part and a <b>decoder</b> part</li>
+                            <li>The encoding component is a <b>stack</b> of 6 encoders, the decoding component is a <b>stack</b> of 6 decoders</li>
+                            <li>The encoder's role is to "capture the meaning" of the input text, while the decoder generates the output text</li>
+                        </ul>
+                        <div class="callout info">
+                            💡 One key property of the Transformer is that the word in each position flows through its <b>own path</b> in the encoder
+                            <br>There are dependencies between these paths in the self-attention layer
+                            <br>The feed-forward layer does not have those dependencies, and the various paths can be executed in parallel
+                        </div>
+                        <br>
+                        <h6>Parameters (Encoder and Decoder)</h6>
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col"><code>n_layers</code></th>
+                                <th scope="col"><code>n_heads</code></th>
+                                <th scope="col"><code>hidden_size</code></th>
+                                <th scope="col"><code>embedding_size</code></th>
+                                <th scope="col"><code>d_model</code></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>6</td>
+                                <td>8</td>
+                                <td>64</td>
+                                <td>512</td>
+                                <td>512</td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm">
+                        <p>
+                        <img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/transformer-architecture.png" class="img-fluid" width="80%">
+                        </p>
+                    </div>
+                </div>
+
+                <h4>Encoder</h4>
+                <p>Before diving into the details of the encoder, let's first understand the key mechanism that powers the Transformer model</p>
+                <h5>Scaled Dot-Product Attention</h5>
+                <h6>Intuition</h6>
+                <p>During the encoding process, the self-attention mechanism allows the model to consider the entire input sequence when encoding 
+                    each word. By attending to other relevant words in the sequence, the model can capture useful context and dependencies, 
+                    leading to a more informed and accurate encoding for the current word being processed
+                </p>
+                <h6>Math</h6>
+                <p>
+                    <img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/scaled-dot-product.png" class="img-fluid" width="33%">
+                </p>
+                <h6>Steps</h6>
+                <div class="row">
+                    <div class="col-sm">
+                    <p><img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/attention-matrix-1.png" class="img-fluid"></p>
+                    </div>
+                    <div class="col-sm">
+                        <p><img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/attention-matrix-2.png" class="img-fluid" width="80%"></p>
+                    </div>
+                </div>
+                1. Create three vectors from each of the encoder's input vectors (e.g. embedding of each word)</li>
+                <ul>
+                    <li>For each word in the input sentence, the encoder computes three vectors called the "query", "key", and "value"</li>
+                    <li>These vectors are derived by multiplying the word's embedding with three trained weight matrices</li>
+                    <li>The weight matrices project the word embedding into the query, key, and value vector spaces, which are then used in the 
+                        self-attention calculation
+                    </li>    
+                </ul>
+                <div class="callout info">
+                    These vectors are smaller in dimension than the embedding vector: this is an architecture choice to make the 
+                    computation of multiheaded attention (mostly) <b>constant</b>
+                </div>
+                2. Calculate attention scores <code>Q^K</code></li>
+                <ul>
+                    <li>The attention scores determine how much importance or relevance to assign to other words in the input sentence 
+                        when encoding the current word at a specific position
+                    </li>
+                    <li>To calculate the attention score between the current word and every other word, the model takes the dot product 
+                        of the query vector for the current word and the key vector of the respective other word being scored against
+                    </li>
+                    <li>This operation is repeated for all word pairs in the sentence. It is parallielized using matrix multiplication
+                        where each row represents a word
+                    </li>
+                    <li>For instance, the attention scores for the word in position #1 will be [<code>q1^k1</code>, <code>q1^k2</code>,
+                            …, <code>q1^k64</code>]
+                    </li>
+                </ul>
+                3. Normalize
+                <ul>
+                    <li>The attention scores are divided by √64 = 8 (based on the dimension of the key vectors).
+                        This scaling helps stabilize the gradients during training
+                    </li>
+                    <li>The scaled scores are then passed through a softmax function to obtain normalized attention weights that sum to 1 
+                        across all words
+                    </li>
+                </ul>
+                4. Weight Value vectors
+                <ul>
+                    <li>Each value vector is multiplied by its corresponding softmax attention weight</li>
+                    <li>The intuition here is to keep intact the values of the word(s) we want to focus on, 
+                        and zero-out irrelevant words (by multiplying them by tiny numbers like 0.001, for example)
+                    </li>
+                </ul>
+
+                <h5>Multi-Head Attention</h5>
+                    <ul>
+                        <li>Multi-head attention consists of several attention layers running in parallel, in <b>attention heads</b></li>
+                        <li>It expands the model's ability to focus on different aspects of the input simultaneously by giving 
+                            the attention block multiple <b>"representation subspaces"</b>
+                        </li>
+                        <li>The model can <b>attend to different positional relationships</b> and capture complementary context from various 
+                            representation subspace
+                        </li>
+                        <li>We have <b>multiple sets of query, key, value</b> weight matrices in each attention head. 
+                            Each set is used to project the input embeddings into a different representation subspace
+                        </li>
+                        <li>By combining the outputs, the model can integrate diverse contextual information and attend to a richer set of 
+                            features when encoding each word
+                        </li>
+                    </ul>
+                    <p>
+                    <img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/multi-head-attention.png" class="img-fluid" width="90%">
+                    </p>
+                <h5>Positional Encoding</h5>
+                    <ul>
+                        <li>The goal is to provide the model with information about the <b>position</b> and <b>relative positions</b> of words in the input sequence</li>
+                        <li>This is done by <b>adding</b> positional encoding vectors to the input word embeddings</li>
+                        <li>These vectors follow a specific pattern derived from sine and cosine functions of different frequencies, <b>unique</b> for each position</li>
+                        <li>By <b>learning</b> to associate these patterned vectors with word positions, the model can determine the order of words and the distances between them in the sequence</li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/positional-encoding.png" class="img-fluid">
+                        </div>
+                        <div class="col-sm">
+                            <br>
+                            <ul>
+                                <li>The image represents a real example of positional encoding for 10 words (rows) with an hidden size of 64 (columns)</li>
+                                <li>The vectors exhibit an <b>interleaved</b> pattern because they are constructed by interweaving two signals</li>
+                                <li>One signal is generated using a sine function, where different frequency components (columns) follow a sinusoidal pattern across positions (rows)</li>
+                                <li>The other signal is generated using a cosine function, also with different frequency components (alternating columns) following a cosinusoidal pattern across positions</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <br>
+
+                <h5>Residual connections</h5>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <ul>
+                            <li>The encoder and decoder components use <b>residual connections</b> followed by a <b>layer normalization</b> step</li>
+                            <li>The idea of residual connections is that every layer shouldn't create an entirely new type of representation, 
+                                replacing the old one with <code>x = layer(x)</code>. It should instead just <b>tweak the existing representation</b> 
+                                with an update: <code>x = x + layer(norm(x))</code></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm">
+                        <p><img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/residuals.png" class="img-fluid"></p>
+                    </div>
+                </div>
+
+                <h4>Decoder</h4>
+                <ul>
+                    <li>The blocks on the decoder side are similar to those on the encoder side</li>
+                    <li>Here's how they work together:</li>
+                    <ol>
+                        <li>The encoder takes in and processes the input sequence</li>
+                        <li>The <b>top encoder</b>'s output is transformed into key (<code>K</code>) and value (<code>V</code>) vectors</li>
+                        <li><b>Each</b> decoder block has an "encoder-decoder attention" layer that uses these <code>K</code> and <code>V</code> vectors to focus on relevant parts of the input sequence while generating the output</li>
+                    </ol>
+                    <li>For each step in the decoding phase:</li>
+                    <ol>
+                        <li>The decoder produces an output element based on the <b>previous decoder output</b> and the <b>encoder representations</b></li>
+                        <li>The process repeats, with each decoder block attending to <b>previous decoder outputs</b> (via masked self-attention) and the encoder representations (via encoder-decoder attention)</li>
+                        <li>This continues until a special end-of-sequence symbol is generated</li>
+                    </ol>
+                    <li>Like the encoder, the decoder inputs are <b>embedded and positionally encoded</b> to incorporate sequential information</li>
+                    <li>However, in the decoder's self-attention, future positions are <b>masked</b> to prevent attending to subsequent outputs during prediction</li>
+                    <li>The "encoder-decoder attention" layer computes attention scores between the <b>decoder's queries</b> and the <b>encoder's key-value</b> pairs</li>
+                </ul>
+                <div class="row">
+                    <div class="col-sm">
+                        <p><video src="https://raw.githubusercontent.com/bt2513/bt2513.github.io/main/notes/2024-05-21-transformer/decoder-1.mov" class="img-fluid"></video></p>
+                    </div>
+                    <div class="col-sm">
+                        <p><video src="https://raw.githubusercontent.com/bt2513/bt2513.github.io/main/notes/2024-05-21-transformer/decoder-2.mov" class="img-fluid"></video></p>
+                    </div>
+                </div>
+
+                <h4>Final Linear and softmax layer</h4>
+                <ul>
+                    <li>The final linear layer is a <b>fully connected neural network</b> that projects the decoder's output vector into a <b>larger logits</b> vector with dimensionality equal to the <b>vocabulary size</b></li>
+                    <li>Each element in the logits vector represents the score or prediction for a unique word in the vocabulary</li>
+                    <li>The <b>softmax</b> function is then applied to the logits vector to convert the scores into <b>probabilities</b> that sum to 1</li>
+                    <li>The word corresponding to the highest probability in the softmax output can be chosen as the predicted output for the current time step (greedy approach)</li>
+                    <li>Otherwise, the probability distribution can be used for <b>Beam Search</b> for a more sophisticated and higher quality generation!</li>
+                </ul>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <p><img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/final-layer.png" class="img-fluid"></p>
+                    </div>
+                    <div class="col-sm">
+                        <p><img src="/Users/bertrandthia/Desktop/projects/bt2513.github.io/notes/2024-05-21-transformer/output-example.png" class="img-fluid"></p>
+                    </div>
+                </div>
+
+                <!-- RESSOURCES  -->
+                <hr>
+
+                <h5>Acknowledgments</h5>
+                <ul>
+                    <li><a href="https://nlp.seas.harvard.edu/annotated-transformer/"><u>The Annotated Transformer (Harvard)</u></a></li>
+                    <li><a href="https://jalammar.github.io/illustrated-transformer/"><u>The Illustrated Transformer</u></a></li>
+                    <li><a href="https://osanseviero.github.io/hackerllama/blog/posts/random_transformer/#self-attention"><u>The Maths behind the Transformer</u></a></li>
+                </ul>
+
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container text-center">
+                <span>&copy; 2024 <a href="https://bt2513.github.io/">Bertrand's Notes</a></span>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+        </script>
+    </body>
+  
+  </html>
