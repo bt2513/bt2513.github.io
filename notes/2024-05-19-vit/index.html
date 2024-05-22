@@ -100,7 +100,7 @@
                     </div>
                 </div>
 
-                <h4>Forward</h4>
+                <h4>Forward Pass</h4>
                 <ul>
                     <li>Images of shape <code>(H, W, C)</code> are converted into a sequence of flattened 2D patches of shape <code>(N, P^2*C)</code></li>
                     <ul>
@@ -115,11 +115,11 @@
                     </li>
                     <li>The output of the Transformer encoder for this position serves as the overall image representation and a classification head is attached to this position</li>
                     <li>Position embeddings are added to the patch embeddings  to retain positional information, similar to the use of Word Position Embeddings, <code>wpe</code> in the Transformer</li>
-                    <li>The Linear Projection of flattened patches projects them into <code>d_mode</code>l dimensions. This layer represents the patch embeddings (equivalent to a Word Token Embedding layer,<code>wte</code>, for the Transformer)</li>
+                    <li>The Linear Projection of flattened patches projects them into <code>d_mode</code>l dimensions. This layer represents the patch embeddings (equivalent to a Word Token Embedding layer, <code>wte</code>, for the Transformer)</li>
                 </ul>
 
                 <img src="/notes/2024-05-19-vit/transformer-forward.png" alt="" width="65%">
-                <br>No modifications compared to the original Transformer forward
+                <br>There are no modifications compared to the original Transformer forward pass
                 <br><code>MSA</code> = Multihead Self-Attention, <code>LN</code> = Layer Norm, <code>z_0</code> represents the embedded patches + position embeddings, 
                 <code>D</code> = <code>d_model</code>, <code>L</code> is the number of layers in the Transformer (layers are processed sequentially)
                 
@@ -140,7 +140,7 @@
                     <li>This result reinforces the intuition that the convolutional inductive bias is useful for smaller datasets, but for larger ones, learning the relevant patterns directly 
                         from data is sufficient, even beneficial
                     </li>
-                    <li>Rhe researchers noticed that pretraining efficiency seems dependent on training schedule, optimizer, weight decay, etc. though</li>
+                    <li>The researchers noticed that pretraining efficiency seems dependent on training schedule, optimizer, weight decay, etc. though</li>
                     <li>Vision Transformers overfit faster on smaller datasets than ResNet</li>
                     <li>Vision Transformers dominate ResNets on the performance/compute trade-off</li>
                     <li>ViT uses approximately <b>2 - 4x</b> less compute to attain the same performance</li>
@@ -151,8 +151,8 @@
                 </ul>
 
                 <div class="callout info">
-                    💡 <i>TL;DR</i>: Vision Transformer matches or exceeds the state of the art on many image classification datasets, whilst being relatively cheap to pre-train.
-                    <br>The researchers demonstrate the effectiveness of interpreting an image as a sequence of patches, and processed similarly as in NLP tasks. 
+                    💡 <i>TL;DR</i>: Vision Transformer matches or exceeds the state of the art on many image classification datasets, whilst being relatively cheap to pre-train
+                    <br>The researchers demonstrate the effectiveness of interpreting an image as a sequence of patches, processed similarly as in NLP tasks. 
                     They prove that this approach is <b>scalable and effective coupled with pre-training on large datasets</b>
                 </div>
 
