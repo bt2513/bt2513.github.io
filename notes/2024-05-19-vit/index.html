@@ -15,7 +15,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="/assets/css/style.css">
-
     </head>
 
     <body>
@@ -47,136 +46,145 @@
         <!-- MAIN CONTENT -->
         <div class="container mt-5">
             <!-- INTRO -->
-            <h2 class="mb-4">📺 ViTs: Visual Transformers</h2>
+            <h2 class="mb-4 text-center">📺 ViTs: Visual Transformers</h2>
             <h6>
-            <a href="https://arxiv.org/pdf/2010.11929"><u>Paper</u></a> 
-            | An image is worth 16 x 16 words: Transformers for image recognition at scale (2021)
+                <div class="text-center mb-4">
+                    <a href="https://arxiv.org/pdf/2010.11929">
+                        An image is worth 16 x 16 words: Transformers for image recognition at scale (2021)
+                    </a>
+                </div>
             </h6>
             <hr>
 
-            <div class="container article">
-                <h3 class="mt-5">What are ViTs?</h3>
-                <ul>
-                    <li>An application of the Transformer architecture typically used for NLP to image recognition, i.e. image classification tasks</li>
-                    <li>ViTs achieve state-of-the-art performance when scaled</li>
-                    <li>ViTs are able to handle images of arbitrary size</li>
-                    <li>When trained on insufficient amount of data, Transformers lack some of the <i>inductive biases</i> inherent to CNNs, 
-                        such as translation equivariance and locality, and therefore do not generalize well
-                    </li>
-                    <li>This changes if the models are trained on larger datasets (14M-300M images)</li>
-                </ul>
-
-                <h3>Model Details</h3>
-                <div class="row">
-                    <div class="col-sm">
-                        <img src="/notes/2024-05-19-vit/vit-architecture.png" alt="" class="img-fluid">
-                    </div>
-                    <div class="col-sm">
-                        <img src="/notes/2024-05-19-vit/vit-parameters.png" alt="" class="img-fluid">
-                        <p class="pt-4">
-                            ViT-Large uses image patches of dimension 16 x 16
-                            <br>ViT-Huge uses image patches of dimension 14 x 14
-                        </p>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-sm">
-                        <b>Pretraining</b>
+            <div class="row">
+                <div class="col-sm"></div>
+                <div class="col-sm-8">
+                    <div class="container article">
+                        <h3 class="mt-4">What are ViTs?</h3>
                         <ul>
-                            <li>Adam:  β1 = 0.9, β2 = 0.999</li>
-                            <li>Batch size = 4,096</li>
-                            <li>weight decay of 0.1</li>
-                            <li>linear learning rate warmup</li>
-                            <li>Image resolution: 224 x 224</li>
+                            <li>An application of the Transformer architecture typically used for NLP to image recognition, i.e. image classification tasks</li>
+                            <li>ViTs achieve state-of-the-art performance when scaled</li>
+                            <li>ViTs are able to handle images of arbitrary size</li>
+                            <li>When trained on insufficient amount of data, Transformers lack some of the <i>inductive biases</i> inherent to CNNs, 
+                                such as translation equivariance and locality, and therefore do not generalize well
+                            </li>
+                            <li>This changes if the models are trained on larger datasets (14M-300M images)</li>
                         </ul>
-                    </div>
-                    <div class="col-sm">
-                        <b>Fine-tuning</b>
+
+                        <h3>Model Details</h3>
+                        <p><div class="row overflow-row">
+                            <div class="col-sm">
+                                <img src="/notes/2024-05-19-vit/vit-architecture.png" alt="" class="img-fluid">
+                            </div>
+                            <div class="col-sm">
+                                <img src="/notes/2024-05-19-vit/vit-parameters.png" alt="" class="img-fluid">
+                                <p class="pt-4">
+                                    ViT-Large uses image patches of dimension 16 x 16
+                                    <br>ViT-Huge uses image patches of dimension 14 x 14
+                                </p>
+                            </div>
+                        </div></p>
+                        <div class="row mt-4">
+                            <div class="col-sm">
+                                <b>Pretraining</b>
+                                <ul>
+                                    <li>Adam:  β1 = 0.9, β2 = 0.999</li>
+                                    <li>Batch size = 4,096</li>
+                                    <li>weight decay of 0.1</li>
+                                    <li>linear learning rate warmup</li>
+                                    <li>Image resolution: 224 x 224</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm">
+                                <b>Fine-tuning</b>
+                                <ul>
+                                    <li>SGD with momentum of 0.9</li>
+                                    <li>Batch size = 512</li>
+                                    <li>Image resolution: 384 x 384</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h4>Forward Pass</h4>
                         <ul>
-                            <li>SGD with momentum of 0.9</li>
-                            <li>Batch size = 512</li>
-                            <li>Image resolution: 384 x 384</li>
+                            <li>Images of shape <code>(H, W, C)</code> are converted into a sequence of flattened 2D patches of shape <code>(N, P^2*C)</code></li>
+                            <ul>
+                                <li><code>H</code>= height, <code>W</code> = width, <code>C</code> = channels, <code>P</code> = side of patch</li>
+                                <li><code>N = HW/P^2</code> is the resolution of an image (<code>HW</code>) divided by the size of a patch (<code>P^2</code>). 
+                                    This is equivalent to counting how many patches can fit into an image
+                                </li>
+                                <li><code>N</code> is also equivalent to <code>seq_len</code> for the Transformer architecture</li>
+                            </ul>
+                            <li>Similar to BERT's <code>[CLASS]</code> token, a <b>learnable embedding</b> is prepended to the sequence of embedded patches 
+                                (as indicated by <code>0*</code> on the image above). It is randomly initialized and the same vector is used for all images
+                            </li>
+                            <li>The output of the Transformer encoder for this position serves as the overall image representation and a classification head is attached to this position</li>
+                            <li>Position embeddings are added to the patch embeddings  to retain positional information, similar to the use of Word Position Embeddings, <code>wpe</code> in the Transformer</li>
+                            <li>The Linear Projection of flattened patches projects them into <code>d_mode</code>l dimensions. This layer represents the patch embeddings (equivalent to a Word Token Embedding layer, <code>wte</code>, for the Transformer)</li>
                         </ul>
+
+                        <img src="/notes/2024-05-19-vit/transformer-forward.png" style="max-height: 150px;">
+                        <br>There are no modifications compared to the original Transformer forward pass
+                        <br><code>MSA</code> = Multihead Self-Attention, <code>LN</code> = Layer Norm, <code>z_0</code> represents the embedded patches + position embeddings, 
+                        <code>D</code> = <code>d_model</code>, <code>L</code> is the number of layers in the Transformer (layers are processed sequentially)
+                        
+                        <h4 class="mt-4">Pretraining vs Fine-tuning</h4>
+                        <ul>
+                            <li>Typically, ViTs are pretrained on <b>large</b> datasets, and fine-tuned on <b>smaller</b> downstream tasks</li>
+                            <li>Pretraining is done using one prediction head, while fine-tuning is based on a zero-initialized <code>D x K</code> feedforward layer, where <code>K</code> is the number of downstream classes</li>
+                            <li>Using images of higher resolution has been proven to be beneficial during fine-tuning. In this case, 2D interpolation of the pre-trained position embeddings are manually injected to balance 
+                                for the loss of meaning of the pre-trained position embeddings (shorter sequence length seen during training)
+                            </li>
+                            <li>Standard <b>cross-entropy loss function</b> used during training to compare the predicted class probabilities with the true class labels</li>
+                        </ul>
+
+                        <h3>Results</h3>
+                        <ul>
+                            <li>ViTs attain state of the art on most recognition benchmarks at a <b>lower computational pre-training cost</b> compared to ResNet (previous SOTA)</li>
+                            <li>Performances have shown to <b>scale</b> with model size and dataset size</li>
+                            <li>This result reinforces the intuition that the convolutional inductive bias is useful for smaller datasets, but for larger ones, learning the relevant patterns directly 
+                                from data is sufficient, even beneficial
+                            </li>
+                            <li>The researchers noticed that pretraining efficiency seems dependent on training schedule, optimizer, weight decay, etc. though</li>
+                            <li>Vision Transformers overfit faster on smaller datasets than ResNet</li>
+                            <li>Vision Transformers dominate ResNets on the performance/compute trade-off</li>
+                            <li>ViT uses approximately <b>2 - 4x</b> less compute to attain the same performance</li>
+                            <li>Vision Transformers appear not to saturate within the range studied, motivating future scaling efforts</li>
+                            <li>The researchers note that much of the Transformer model's success stems not only from their excellent scalability 
+                                but also from their suitability to <b>large scale self-supervised pre-training</b> - that they would like to explore more in the future
+                            </li>
+                        </ul>
+
+                        <div class="callout info">
+                            💡 <i>TL;DR</i>: Vision Transformer matches or exceeds the state of the art on many image classification datasets, whilst being relatively cheap to pre-train
+                            <br>The researchers demonstrate the effectiveness of interpreting an image as a sequence of patches, processed similarly as in NLP tasks. 
+                            They prove that this approach is <b>scalable and effective coupled with pre-training on large datasets</b>
+                        </div>
+
+                        <h3 class="mt-4">Next areas of research mentioned</h3>
+                        <ul>
+                            <li>Research application of ViTs to other computer vision tasks, such as detection and segmentation</li>
+                            <li>Continue exploring self-supervised pre-training methods</li>
+                            <li>Further scale ViTs, as this would likely lead to improved performance</li>
+                        </ul>
+
+                        <hr>
+
+                        <h5>Other resources</h5>
+                        <ul>
+                            <li><a href="https://blog.mdturp.ch/posts/2024-04-05-visual_guide_to_vision_transformer.html"><u>A visual guide to ViTs</u></a></li>
+                            <li><a href="https://github.com/google-research/vision_transformer"><u>github.com/google-research/vision_transformer</u></a></li>
+                        </ul>
+
                     </div>
                 </div>
-
-                <h4>Forward Pass</h4>
-                <ul>
-                    <li>Images of shape <code>(H, W, C)</code> are converted into a sequence of flattened 2D patches of shape <code>(N, P^2*C)</code></li>
-                    <ul>
-                        <li><code>H</code>= height, <code>W</code> = width, <code>C</code> = channels, <code>P</code> = side of patch</li>
-                        <li><code>N = HW/P^2</code> is the resolution of an image (<code>HW</code>) divided by the size of a patch (<code>P^2</code>). 
-                            This is equivalent to counting how many patches can fit into an image
-                        </li>
-                        <li><code>N</code> is also equivalent to <code>seq_len</code> for the Transformer architecture</li>
-                    </ul>
-                    <li>Similar to BERT's <code>[CLASS]</code> token, a <b>learnable embedding</b> is prepended to the sequence of embedded patches 
-                        (as indicated by <code>0*</code> on the image above). It is randomly initialized and the same vector is used for all images
-                    </li>
-                    <li>The output of the Transformer encoder for this position serves as the overall image representation and a classification head is attached to this position</li>
-                    <li>Position embeddings are added to the patch embeddings  to retain positional information, similar to the use of Word Position Embeddings, <code>wpe</code> in the Transformer</li>
-                    <li>The Linear Projection of flattened patches projects them into <code>d_mode</code>l dimensions. This layer represents the patch embeddings (equivalent to a Word Token Embedding layer, <code>wte</code>, for the Transformer)</li>
-                </ul>
-
-                <img src="/notes/2024-05-19-vit/transformer-forward.png" alt="" width="65%">
-                <br>There are no modifications compared to the original Transformer forward pass
-                <br><code>MSA</code> = Multihead Self-Attention, <code>LN</code> = Layer Norm, <code>z_0</code> represents the embedded patches + position embeddings, 
-                <code>D</code> = <code>d_model</code>, <code>L</code> is the number of layers in the Transformer (layers are processed sequentially)
-                
-                <h4 class="mt-4">Pretraining vs Fine-tuning</h4>
-                <ul>
-                    <li>Typically, ViTs are pretrained on <b>large</b> datasets, and fine-tuned on <b>smaller</b> downstream tasks</li>
-                    <li>Pretraining is done using one prediction head, while fine-tuning is based on a zero-initialized <code>D x K</code> feedforward layer, where <code>K</code> is the number of downstream classes</li>
-                    <li>Using images of higher resolution has been proven to be beneficial during fine-tuning. In this case, 2D interpolation of the pre-trained position embeddings are manually injected to balance 
-                        for the loss of meaning of the pre-trained position embeddings (shorter sequence length seen during training)
-                    </li>
-                    <li>Standard <b>cross-entropy loss function</b> used during training to compare the predicted class probabilities with the true class labels</li>
-                </ul>
-
-                <h3>Results</h3>
-                <ul>
-                    <li>ViTs attain state of the art on most recognition benchmarks at a <b>lower computational pre-training cost</b> compared to ResNet (previous SOTA)</li>
-                    <li>Performances have shown to <b>scale</b> with model size and dataset size</li>
-                    <li>This result reinforces the intuition that the convolutional inductive bias is useful for smaller datasets, but for larger ones, learning the relevant patterns directly 
-                        from data is sufficient, even beneficial
-                    </li>
-                    <li>The researchers noticed that pretraining efficiency seems dependent on training schedule, optimizer, weight decay, etc. though</li>
-                    <li>Vision Transformers overfit faster on smaller datasets than ResNet</li>
-                    <li>Vision Transformers dominate ResNets on the performance/compute trade-off</li>
-                    <li>ViT uses approximately <b>2 - 4x</b> less compute to attain the same performance</li>
-                    <li>Vision Transformers appear not to saturate within the range studied, motivating future scaling efforts</li>
-                    <li>The researchers note that much of the Transformer model's success stems not only from their excellent scalability 
-                        but also from their suitability to <b>large scale self-supervised pre-training</b> - that they would like to explore more in the future
-                    </li>
-                </ul>
-
-                <div class="callout info">
-                    💡 <i>TL;DR</i>: Vision Transformer matches or exceeds the state of the art on many image classification datasets, whilst being relatively cheap to pre-train
-                    <br>The researchers demonstrate the effectiveness of interpreting an image as a sequence of patches, processed similarly as in NLP tasks. 
-                    They prove that this approach is <b>scalable and effective coupled with pre-training on large datasets</b>
-                </div>
-
-                <h3 class="mt-4">Next areas of research mentioned</h3>
-                <ul>
-                    <li>Research application of ViTs to other computer vision tasks, such as detection and segmentation</li>
-                    <li>Continue exploring self-supervised pre-training methods</li>
-                    <li>Further scale ViTs, as this would likely lead to improved performance</li>
-                </ul>
-
-                <hr>
-
-                <h5>Other resources</h5>
-                <ul>
-                    <li><a href="https://blog.mdturp.ch/posts/2024-04-05-visual_guide_to_vision_transformer.html"><u>A visual guide to ViTs</u></a></li>
-                    <li><a href="https://github.com/google-research/vision_transformer"><u>github.com/google-research/vision_transformer</u></a></li>
-                </ul>
-
+                <div class="col-sm"></div>
             </div>
         </div>
 
         <!-- FOOTER -->
         <footer class="footer">
-            <div class="container text-center">
+            <div class="container text-center mt-4">
                 <span>&copy; 2024 <a href="https://bt2513.github.io/">Bertrand's Notes</a></span>
             </div>
         </footer>
