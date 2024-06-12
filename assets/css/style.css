@@ -85,3 +85,15 @@ a:hover {
 background-color: #f8d7da;
 border-color: #f5c6cb;
 }
+
+.overflow-row {
+    overflow-x: visible;
+    position: relative;
+    width: 80vw;
+    left: 50%; /* Move the element to the center horizontally */
+    transform: translateX(-50%); /* Shift the element back by 50% of its width */
+}
+
+.overflow-row > div {
+    position: relative;
+}
