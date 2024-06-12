@@ -46,420 +46,428 @@
         <!-- MAIN CONTENT -->
         <div class="container mt-5">
             <!-- INTRO -->
-            <h2 class="mb-4">🤝 Large-Scale Recommender Systems</h2>
+            <h2 class="mb-4 text-center">🤝 Large-Scale Recommender Systems</h2>
             <h6>
-            <a href="https://dl.acm.org/doi/pdf/10.1145/2959100.2959190"><u>Paper</u></a> 
-            | Deep Neural Networks for YouTube Recommendations (2016)
+            <div class="text-center mb-4"><a href="https://dl.acm.org/doi/pdf/10.1145/2959100.2959190">
+                Deep Neural Networks for YouTube Recommendations (2016)</a>
+            </div>
             </h6>
             <hr>
-            <!-- CONTENT -->
-            <div class="container article">
-                <i>My notes draw on both the classic and must-read YouTube paper, as well as more 
-                    recent sources, for a comprehensive understanding of the current state</i>
-                
-                <h3 class="mt-4">Model vs System</h3>
-                <ul>
-                    <li>The role of a Recommender <b>Model</b> is <b>scoring</b> the interest a user may have with a set of items</li>
-                    <li>The scores represent the model's estimate of how interested a user will be in each item</li>
-                    <li>
-                        The role of a Recommender <b>System</b> is to scale the capabilities of one or more Recommender <b>Model(s)</b> to serve <b>accurate</b> and <b>low-latency</b> recommendations
-                        efficiently across various users, items, and scenarios
-                    </li>
-                </ul>
 
-                <h3 class="mt-4">Recommendation Challenges</h3>
-                <ul>
-                    <li><u>Scalability</u>: Scoring is computationally expensive. Item catalogues can grow to millions, hundreds of millions, even billions in extreme cases. Scoring every item for every user isn't feasible in most scenarios</li>
-                    <li><u>Cold-start problem</u>: How to deal with new items and new users</li>
-                    <li><u>Online-offline gap</u>: Live A/B results are not always correlated with offline experiments. It is difficult to estimate the dynamic effects of recommendations on user behavior and preferences, and live experiments can be
-                        costly and risky</li>
-                    <li><u>Freshness</u>: Ideally, we want real-time recommendations, responsive to new items and the latest actions taken by users</li>
-                    <li><u>Noise</u>: Data is often sparse and incomplete. We rarely obtain the ground truth of user satisfaction and instead model noisy implicit feedback signals.
-                        Furthermore, metadata associated with content is often poorly structured without a well-defined ontology</li>
-                </ul>
-
-                <h3 class="mt-4">Evaluation</h3>
-                <ul>
-                    <li>During development, extensive use of offline metrics (precision, recall, ranking loss, etc.) is recommended to guide iterative improvements to the system</li>
-                    <li>However, for the final determination of the effectiveness of a model, <b>A/B testing via live experiments is the gold standard</b></li>
-                    <li>Live experiments allow to measure subtle changes in click-through rate, and many other user engagement metrics</li>
-                </ul>
-                <p>
-                    <div class="callout info">
-                        ☝️ This is essential because live A/B results are not always correlated with offline experiments
-                        <br>The Youtube paper illustrates the online-offline gap, showcasing how live
-                        experiments enabled the authors to <b>iterate</b> on their models and identify 
-                        features that improved live metrics
-                    </div>
-                </p>
-
-                <h3 class="mt-4">Design Patterns</h3>
-                <ul>
-                    <li>To meet low-latency and high-precision serving requirements, large-scale recommenders are often deployed to production as <b>multi-stage systems</b></li>
-                </ul>
-
-                <h5>Traditional design pattern: 2-stage recommender system</h5>
-                <div class="row mt-4">
-                    <div class="col-sm border rounded-4 border-dark-subtle border-3">
-                
-                <p>
-                <h6>1st stage: Candidate generation</h6>
-                <ul>
-                    <li>The first stage goal is to sift through >100M candidate items and <b>retrieve</b> a relevant ~hundreds subset for downstream ranking/filtering tasks</li>
-                    <li>Retrieval models requires <b>efficiency</b>: quickly evaluating more items per user increases the likelihood of finding the best, personalized item for them</li>
-                    <li><b>Multiple</b> candidate sources within a single recommender system is common and ensure a diverse set of presented items to the user in the end</li>
-                </ul>
-                <h6>2nd stage: Ranking</h6>
-                <ul>
-                    <li>Objective: Optimize <b>precision</b> by re-ranking candidates</li>
-                    <li>Ranking models are generally more <b>powerful</b>, computationally <b>expensive</b> and <b>heavyweight</b> due to the lower number of items to score</li>
-                    <li>Ranking models benefit from a <b>richer set of specialized features</b> including candidate source information, scores assigned, users' previous interactions with the item and other similar items, etc.</li>
-                    <li>The ranking stage can be crucial for <b>ensembling different candidate sources</b> with non-comparable scores</li>
-                </ul>
-
-                    </div>
-                    <div class="col-sm d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/youtube-system.png" class="img-fluid" style="max-height: 400px;">
-                    </div>
-                </div></p>
-
-                <h6 class="mt-4"><u>Serving Diagram</u></h6>
-
-                <p><div class="row">
-                    <div class="col-sm d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/2-stage-grid.png" class="img-fluid" style="max-height: 400px;">
-                    </div>
-                    <div class="col-sm d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/2-stage-diagram.png" class="img-fluid" style="max-height: 400px;">
-                    </div>
-                </div></p>
-
-                <p>
-                    <div class="callout info">
-                        💡 <i>tl;dr</i>: The two-stage approach to recommendation enables real-time recommendations from a large corpus (millions) of items while ensuring that the small number of
-                        items recommended are personalized and engaging for the user. This design also facilitates blending candidates from multiple sources for increased diversity
-                    </div>
-                </p>
-                <p>
-                    <div class="callout info">
-                        🚀 <i>Advantages</i>
+            <div class="row">
+                <div class="col-sm"></div>
+                <div class="col-sm-8">
+                    <!-- CONTENT -->
+                    <div class="container article">
+                        <i>My notes draw on both the classic and must-read YouTube paper, as well as more 
+                            recent sources, for a comprehensive understanding of the current state</i>
+                        
+                        <h3 class="mt-4">Model vs System</h3>
                         <ul>
-                            <li>Potential to efficiently recommend in real-time a larger corpus of items</li>
-                            <li>Improved performance within a fixed computational budget by splitting the tasks of recall and precision optimization between the candidate generator and ranker respectively, instead of having a single model trying to reach the best balance between both</li>
-                            <li>At the ranking step, it is possible to leverage very heavyweight models within the execution time constraints because the candidate set is significantly smaller</li>
-                            <li>Increased modeling flexibility and control over recommendations by stacking multiple specialized candidate generators, each targeting different aspects (e.g., exploration vs. exploitation)</li>
+                            <li>The role of a Recommender <b>Model</b> is <b>scoring</b> the interest a user may have with a set of items</li>
+                            <li>The scores represent the model's estimate of how interested a user will be in each item</li>
+                            <li>
+                                The role of a Recommender <b>System</b> is to scale the capabilities of one or more Recommender <b>Model(s)</b> to serve <b>accurate</b> and <b>low-latency</b> recommendations
+                                efficiently across various users, items, and scenarios
+                            </li>
                         </ul>
-                    </div>
-                </p>
-                <p class="px-4">
-                    ☝️ <i>Intuition</i>: Given a catalog of 1 billion videos and a time constraint of 200 milliseconds to select a dozen videos for a user, 
-                    you can only spend 0.2 nanoseconds per video for candidate selection. Within such a short timeframe, it's impossible to accurately 
-                    compute a score for each video. Therefore, processing the videos in a multi-stage fashion allows you to achieve the best result within 
-                    the given constraints by quickly selecting a relevant subset of items, and then taking more time to refine the selection
-                </p>
 
-                <h5 class="mt-4">More advanced design pattern: 4-stage recommender system</h5>
-                <ul>
-                    <li>In practice, many items should be excluded from recommendations due to factors like <b>unavailability</b>, <b>age restrictions</b>, <b>user history</b>, <b>licensing limitations</b>, etc.</li>
-                    <li>Instead of relying on scoring or retrieval models to do this, a dedicated <b>Filtering stage</b> can be more helpful to enforce business rules in the recommender system</li>
-                    <li>Filtering can occur after Retrieval (with the challenge of ensuring enough candidates for Ranking), integrated with it, or after Ranking in some cases</li>
-                    <li>Filtering enables applying <b>complex business logic rules</b> that would be <b>difficult or impossible for models to learn</b></li>
-                    <li>Examples include simple exclusion queries and more complex techniques like <b>Bloom filters</b> for removing previously interacted items</li>
-                    <li>Additionally, providing a <b>diverse</b> set of recommendations, including items outside the user's normal preferences, can help prevent filter bubbles and <b>encourage exploration</b></li>
-                    <li>Having an explicit <b>Ordering/Diversification stage</b> can allow aligning model outputs with <b>additional business needs or constraints</b></li>
-                </ul>
+                        <h3 class="mt-4">Recommendation Challenges</h3>
+                        <ul>
+                            <li><u>Scalability</u>: Scoring is computationally expensive. Item catalogues can grow to millions, hundreds of millions, even billions in extreme cases. Scoring every item for every user isn't feasible in most scenarios</li>
+                            <li><u>Cold-start problem</u>: How to deal with new items and new users</li>
+                            <li><u>Online-offline gap</u>: Live A/B results are not always correlated with offline experiments. It is difficult to estimate the dynamic effects of recommendations on user behavior and preferences, and live experiments can be
+                                costly and risky</li>
+                            <li><u>Freshness</u>: Ideally, we want real-time recommendations, responsive to new items and the latest actions taken by users</li>
+                            <li><u>Noise</u>: Data is often sparse and incomplete. We rarely obtain the ground truth of user satisfaction and instead model noisy implicit feedback signals.
+                                Furthermore, metadata associated with content is often poorly structured without a well-defined ontology</li>
+                        </ul>
 
-                <h6 class="mt-4"><u>Revisited stages</u></h6>
-                <div class="border rounded-4 border-dark-subtle border-3 px-3">
-                    <p>
+                        <h3 class="mt-4">Evaluation</h3>
+                        <ul>
+                            <li>During development, extensive use of offline metrics (precision, recall, ranking loss, etc.) is recommended to guide iterative improvements to the system</li>
+                            <li>However, for the final determination of the effectiveness of a model, <b>A/B testing via live experiments is the gold standard</b></li>
+                            <li>Live experiments allow to measure subtle changes in click-through rate, and many other user engagement metrics</li>
+                        </ul>
+                        <p>
+                            <div class="callout info">
+                                ☝️ This is essential because live A/B results are not always correlated with offline experiments
+                                <br>The Youtube paper illustrates the online-offline gap, showcasing how live
+                                experiments enabled the authors to <b>iterate</b> on their models and identify 
+                                features that improved live metrics
+                            </div>
+                        </p>
+
+                        <h3 class="mt-4">Design Patterns</h3>
+                        <ul>
+                            <li>To meet low-latency and high-precision serving requirements, large-scale recommenders are often deployed to production as <b>multi-stage systems</b></li>
+                        </ul>
+
+                        <h5>Traditional design pattern: 2-stage recommender system</h5>
+                        <div class="row mt-4 overflow-row">
+                            <div class="col-sm border rounded-4 border-dark-subtle border-3">
+                        
+                        <p>
                         <h6>1st stage: Candidate generation</h6>
                         <ul>
-                            <li>Same as previously</li>
+                            <li>The first stage goal is to sift through >100M candidate items and <b>retrieve</b> a relevant ~hundreds subset for downstream ranking/filtering tasks</li>
+                            <li>Retrieval models requires <b>efficiency</b>: quickly evaluating more items per user increases the likelihood of finding the best, personalized item for them</li>
+                            <li><b>Multiple</b> candidate sources within a single recommender system is common and ensure a diverse set of presented items to the user in the end</li>
                         </ul>
-                        <h6>2nd stage: Filtering</h6>
+                        <h6>2nd stage: Ranking</h6>
                         <ul>
-                            <li>Apply business logic rules and filters to the retrieved candidate set</li>
-                            <li>Examples include excluding out-of-stock items, age-restricted content, previously consumed items, and items with licensing limitations</li>
+                            <li>Objective: Optimize <b>precision</b> by re-ranking candidates</li>
+                            <li>Ranking models are generally more <b>powerful</b>, computationally <b>expensive</b> and <b>heavyweight</b> due to the lower number of items to score</li>
+                            <li>Ranking models benefit from a <b>richer set of specialized features</b> including candidate source information, scores assigned, users' previous interactions with the item and other similar items, etc.</li>
+                            <li>The ranking stage can be crucial for <b>ensembling different candidate sources</b> with non-comparable scores</li>
                         </ul>
-                        <h6>3rd stage: Ranking</h6>
-                        <ul>
-                            <li>Same as previously</li>
-                        </ul>
-                        <h6>4th stage: Ordering/Diversification</h6>
-                        <ul>
-                            <li>Provide a diverse set of recommendations, including items outside the user's normal preferences, to prevent filter bubbles and encourage exploration</li>
-                            <li>Align the final ranked list with additional business needs or constraints through an explicit ordering stage</li>
-                        </ul>
-                    </p>
-                </div>
 
-                <h6 class="mt-4"><u>Serving Diagram & Examples</u></h6>
-                <p><div class="row">
-                    <div class="col-sm d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/4-stage-diagram.png" class="img-fluid" style="max-height: 400px;">
-                    </div>
-                    <div class="col-sm d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/4-stage-examples.png" class="img-fluid" style="max-height: 400px;">
-                    </div>
-                </div></p>
-
-                <p class="px-3">
-                    While more complicated, this system has the advantage of providing a more <b>flexible</b> and <b>controllable</b> way to enforce business rules and constraints in the recommendation process
-                </p>
-
-                <h3 class="mt-4">Model Architectures</h3>
-                <ul>
-                    <li>Retrieval and Ranking models can take various forms, including <b>matrix 
-                        factorization, linear models</b>, <b>tree-models</b> and <b>neural networks</b></li>
-                    <li>In these notes, I'll delve deeper into <b>two-tower models</b>, a popular and effective approach that has gained prominence in recent years</li>
-                    <li>Two-tower models have gained popularity for their ability to efficiently handle retrieval tasks, but they can also be effectively applied to ranking tasks</li>
-                    <li>Notable examples of two-tower model usage include <a href="https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/b9f4e78a8830fe5afcf2f0452862fb3c0d6584ea.pdf"><u>Google Play</u></a>'s retrieval,
-                        <a href="https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/"><u>Instagram's Explore</u></a> feature (with
-                        <a href="https://instagram-engineering.com/powered-by-ai-instagrams-explore-recommender-system-7ca901d2a882"><u>multi-task multi-label neural networks</u></a> for ranking),
-                        <a href="https://medium.com/pinterest-engineering/pinterest-home-feed-unified-lightweight-scoring-a-two-tower-approach-b3143ac70b55"><u>Pinterest</u></a>'s,
-                        <a href="https://medium.com/expedia-group-tech/candidate-generation-using-a-two-tower-approach-with-expedia-group-traveler-data-ca6a0dcab83e"><u>Expedia</u></a>'s,
-                        <a href="https://eng.snap.com/embedding-based-retrieval"><u>Snap</u></a>'s Spotlight, and
-                        <a href="https://www.uber.com/blog/innovative-recommendation-applications-using-two-tower-embeddings/"><u>Uber</u></a>'s recommendation system
-                    </li>
-                </ul>
-
-                <h4>What are Two-tower models?</h4>
-                <div class="d-flex justify-content-center align-items-center">
-                    <img src="/notes/2024-05-31-recsys/two-tower-model.png" class="img-fluid" style="max-height: 250px;">
-                </div>
-                <ul>
-                    <li>Two-tower models are part of <b>neural deep retrieval (NDR)</b>, a latest modeling paradigm for retrieval</li>
-                    <li>A two-tower model consists of two separate <b>neural networks</b>, often referred to as "towers"</li>
-                    <li>Each tower processes query or item features to produce <b>embedding</b> representations, mapped to a <b>shared vector space</b>, allowing their similarities to be computed directly</li>
-                    <li>During training, the model learns to map queries and items to embeddings such that it maximizes the similarity between relevant pairs while minimizing similarity with irrelevant items</li>
-                    <li>Each tower learns layered representations of the input through successive network layers, transforming raw, multi-modal features to magnify useful information, filter out irrelevant data, 
-                        and capture complex data relationships
-                    </li>
-                </ul>
-
-                <h4>Why use Two-tower models?</h4>
-                <ul>
-                    <li><u>Enhanced retrieval</u>: Embedding-based methods outperform traditional keyword-based techniques (like inverted n-grams) by capturing semantic similarity rather than exact matches</li>
-                    <li><u>Flexible modeling</u>: Decoupled query and item towers allow domain-specific feature selection and architectures, capturing complex, non-linear relationships in each domain</li>
-                    <li><u>Hybrid approach</u>: Combine collaborative filtering (query-item interactions) with content-based filtering (entity features) for better recommendation quality and generalization</li>
-                    <li><u>Feature flexibility</u>: Can leverage dense and sparse features (user profiles, historical engagements, metadata, context) for informative embeddings tailored to business goals</li>
-                    <li><u>Mitigate cold-start</u>: Unlike factorization models, can generate meaningful embeddings for new items without user interactions using content features</li>
-                    <li><u>Efficient inference</u>: Ability to decouple query and item inference</li>
-                    <ul>
-                        <li>Each tower only uses its respective input features to produce a vector, thereby the trained towers can be operationalized separately</li>
-                        <li>Decoupling inference of the towers for retrieval means we can precompute and cache vectors to reduce serving computation and latency</li>
-                        <li>It also means we can optimize each inference task independently</li>
-                    </ul>
-                </ul>
-
-                <p><div class="callout info">
-                    💡 <i>Key Benefits</i>
-                    <ul>
-                        <li>Superior performance via expressivity and generalization</li>
-                        <li>Adaptability to diverse features and business objectives</li>
-                        <li>Reduced cold-start: Conceptually, we can think of a new candidate embedding compiling all the content-based and collaborative filtering information learned from candidates with the same or similar feature values</li>
-                        <li>Optimization opportunities for serving latency and compute</li>
-                </div></p>
-
-                <h4>How to implement a Two-tower model?</h4>
-
-                <figure>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/two-tower-model-architecture.png" class="img-fluid" style="max-height: 250px;">
-                    </div> 
-                    <div class="text-center"><figcaption class="figure-caption">Google Play's retrieval model (2020)</figcaption></div>
-                </figure>
-                
-                <h5>Problem Formulation</h5>
-                <ul>
-                    <li>Two-tower models treat the retrieval problem as a <b>multi-class classification problem</b>, where the likelihood of suggesting an item from a large corpus (classes) <i>C</i> is formulated as a <b>softmax probability</b>:</li>
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/softmax-probability.png" class="img-fluid" style="max-height: 75px;">
-                    </div>
-                    <li>Here, <i>ε(x,y)</i> is the <b>logit</b> (model output) for query <i>x</i> and item <i>y</i>, calculated as the inner product of their embeddings: 
-                        <b>ε(x,y) = ⟨u(x; θ), v(y; θ)⟩</b><br>where u(x; θ) is the query embedding and v(y; θ) is the item embedding, both parameterized by <i>θ</i></li>
-                </ul>
-
-                <h5 class="mt-5">Data</h5>
-                <ul>
-                    <li>The YouTube paper emphasizes training a recommender on <b>diverse examples</b>, <b>not just those produced by recommendations</b>, to <b>mitigate exploitation bias</b> and quickly <b>propagate user discoveries via collaborative filtering</b></li>
-                    <li>Another key insight that improved live metrics was to generate a <b>fixed number of training examples per user</b> to prevent highly active users from dominating the loss function</li>
-                    <li>Two-tower models typically use <b>implicit engagement</b> data to build <b>positive user-item pairs</b> and <b>negative user-item pairs</b></li>
-                    <li>Implicit data is noisier but more <b>voluminous</b> than explicit feedback (often sparse), enabling deep-tail recommendations</li>
-                    <li>Missing interactions are considered potential negative signals (<b>missing-as-negatives strategy</b>), while interactions indicate positive signals</li>
-                    <li>User embeddings are learned from user history and context, which helps discriminate among items</li>
-                    <li>In practice, <b>sampling negative user-item pairs is sufficient</b>, as computing all would be computationally expensive (100x slower)</li>
-                    <li>There are two main approaches to efficiently implement negative sampling:
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <ul>
-                                    <li><u>In-batch negative sampling</u>
-                                    <ul>
-                                        <li>For a specific observation in a batch, consider every other observation in the same batch as negative</li>
-                                        <li>This can lead to <b>selection bias</b> (biased softmax during training), mitigated by subtracting the log of item sampling probabilities (i.e., the log probability of that item occurring within the data) from logit scores (before softmax) during training to adapt the loss</li>
-                                        <li>This technique is called <b>log Q correction</b> or sampled softmax in the literature</li>
-                                        <li>Applying the correction <b>significantly improves performance</b></li>
-                                        <li>Without log Q correction, popular items are penalized as they appear more frequently as negatives during training, leading to underrecommendation and lower-quality suggestions</li>
-                                    </ul>
-                                    </li>
-                                </ul>
                             </div>
                             <div class="col-sm d-flex justify-content-center align-items-center">
-                                <img src="/notes/2024-05-31-recsys/in-batch-negative-sampling.png" class="img-fluid" style="max-height: 300px;">
+                                <img src="/notes/2024-05-31-recsys/youtube-system.png" class="img-fluid" style="max-height: 400px;">
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <ul>
-                                    <li><u>Mixed Negative Sampling (MNS)</u>
-                                    <ul>
-                                        <li>Sample <b>uniformly</b> from all items to address the problem that in-batch sampled softmax never generates negatives from uninteracted items, penalizing and lacking resolution for unpopular, fresh or long-tail items</li>
-                                        <li>Append zeros to the right of the label matrix to <b>include non-interacted items in softmax</b></li>
-                                        <li>MNS outperforms many baseline sampling methods by <b>tackling selection bias</b> in implicit user feedback</li>
-                                        <li>Batch B' (<b>a hyperparameter</b>) contains items with <b>no interaction</b> with queries in batch B</li>
-                                        <li>In practice, batch B' comes from an index with precomputed features; during training, each batch picks from this source</li>
-                                        <li>Google's paper (2020) shows <b>diminishing returns for B'</b>: larger B' improves results via larger sample size but may approximate uniform distribution beyond a certain point, deviating from serving time distribution and hurting performance. Also, increasing B' raises training costs, requiring a <b>trade-off</b></li>
-                                    </ul>
-                                    </li>
-                                </ul>
+                        </div></p>
+
+                        <h6 class="mt-4"><u>Serving Diagram</u></h6>
+
+                        <p><div class="row overflow-row">
+                            <div class="col-sm d-flex justify-content-center align-items-center">
+                                <img src="/notes/2024-05-31-recsys/2-stage-grid.png" class="img-fluid" style="max-height: 400px;">
                             </div>
                             <div class="col-sm d-flex justify-content-center align-items-center">
-                                <img src="/notes/2024-05-31-recsys/mixed-negative-sampling.png" class="img-fluid" style="max-height: 300px;">
+                                <img src="/notes/2024-05-31-recsys/2-stage-diagram.png" class="img-fluid" style="max-height: 400px;">
                             </div>
-                        </div>
-                    </li>
-                </ul>
+                        </div></p>
 
-                <p><div class="callout info">
-                    🚧 <i>Caution</i>: When using negative sampling, it is important to handle the cases of <b>accidental hits</b> where identical positive queries appear in the same batch. This can <b>falsely</b> label other items as negative, <b>contradicting their true positive status</b>
-                </div></p>
+                        <p>
+                            <div class="callout info">
+                                💡 <i>tl;dr</i>: The two-stage approach to recommendation enables real-time recommendations from a large corpus (millions) of items while ensuring that the small number of
+                                items recommended are personalized and engaging for the user. This design also facilitates blending candidates from multiple sources for increased diversity
+                            </div>
+                        </p>
+                        <p>
+                            <div class="callout info">
+                                🚀 <i>Advantages</i>
+                                <ul>
+                                    <li>Potential to efficiently recommend in real-time a larger corpus of items</li>
+                                    <li>Improved performance within a fixed computational budget by splitting the tasks of recall and precision optimization between the candidate generator and ranker respectively, instead of having a single model trying to reach the best balance between both</li>
+                                    <li>At the ranking step, it is possible to leverage very heavyweight models within the execution time constraints because the candidate set is significantly smaller</li>
+                                    <li>Increased modeling flexibility and control over recommendations by stacking multiple specialized candidate generators, each targeting different aspects (e.g., exploration vs. exploitation)</li>
+                                </ul>
+                            </div>
+                        </p>
+                        <p class="px-4">
+                            ☝️ <i>Intuition</i>: Given a catalog of 1 billion videos and a time constraint of 200 milliseconds to select a dozen videos for a user, 
+                            you can only spend 0.2 nanoseconds per video for candidate selection. Within such a short timeframe, it's impossible to accurately 
+                            compute a score for each video. Therefore, processing the videos in a multi-stage fashion allows you to achieve the best result within 
+                            the given constraints by quickly selecting a relevant subset of items, and then taking more time to refine the selection
+                        </p>
 
-                <h5 class="mt-5">Feature Engineering</h5>
-                <b>Overview</b>
-                <ul>
-                    <li>Two-tower models can handle <b>multi-modal</b> features (text, image, sound, etc.), <b>sparse</b> features and <b>dense</b> features</li>
-                    <li>These features are first converted into <b>vector</b> representations which can be <b>concatenated</b> and passed to subsequent model layers</li>
-                </ul>
-                <b>Vectorization Methods</b>
-                <ul>
-                    <li><u>Text features</u>: can be generated by using a <b>text vectorizer</b> if meaningful, or <b>hashing</b> otherwise</li>
-                    <li><u>Numeric features</u>: can be <b>normalized</b> or <b>discretized</b></li>
-                    <li><u>Pre-trained embeddings</u>: can be directly used without transformation</li>
-                </ul>
-                <div class="d-flex justify-content-center align-items-center">
-                    <img src="/notes/2024-05-31-recsys/feature-engineering.png" class="img-fluid" style="max-height: 450px;">
-                </div> 
-                <p><div class="callout info">
-                    ☝️ <i>Notes</i>
-                    <br>- Normalizing continuous input features is crucial for neural network <b>convergence</b>; <b>quantile normalization</b> was used before training in the Youtube paper for instance
-                    <br>- Instead of preprocessing, some models apply transformations during training itself. For example, a <b>batch normalization</b> layer after numerical inputs can standardize them, as seen in TabNet.
-                    The <a href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/a7f0822e77e8b6b4c00c879707fe60e3955d4a03.pdf"><u>DASALC</u></a> model also uses raw features and applies transformations (Log, BN) during training, avoiding a separate preprocessing stage
-                </div></p>
-                <b>Handling variable-length signals</b>
-                <div class="row">
-                    <div class="col-sm-8">
+                        <h5 class="mt-4">More advanced design pattern: 4-stage recommender system</h5>
                         <ul>
-                            <li><b>User activity</b> data like purchase history and page views provides valuable input signals for building recommender models</li>
-                            <li>However, users exhibit <b>varying</b> behavior, and activity is a sequence of events with <b>different lengths</b> across users. For instance, 
-                                in the Youtube paper, a user's watch history is represented by a variable-length sequence of sparse video IDs
+                            <li>In practice, many items should be excluded from recommendations due to factors like <b>unavailability</b>, <b>age restrictions</b>, <b>user history</b>, <b>licensing limitations</b>, etc.</li>
+                            <li>Instead of relying on scoring or retrieval models to do this, a dedicated <b>Filtering stage</b> can be more helpful to enforce business rules in the recommender system</li>
+                            <li>Filtering can occur after Retrieval (with the challenge of ensuring enough candidates for Ranking), integrated with it, or after Ranking in some cases</li>
+                            <li>Filtering enables applying <b>complex business logic rules</b> that would be <b>difficult or impossible for models to learn</b></li>
+                            <li>Examples include simple exclusion queries and more complex techniques like <b>Bloom filters</b> for removing previously interacted items</li>
+                            <li>Additionally, providing a <b>diverse</b> set of recommendations, including items outside the user's normal preferences, can help prevent filter bubbles and <b>encourage exploration</b></li>
+                            <li>Having an explicit <b>Ordering/Diversification stage</b> can allow aligning model outputs with <b>additional business needs or constraints</b></li>
+                        </ul>
+
+                        <h6 class="mt-4"><u>Revisited stages</u></h6>
+                        <div class="border rounded-4 border-dark-subtle border-3 px-3">
+                            <p>
+                                <h6>1st stage: Candidate generation</h6>
+                                <ul>
+                                    <li>Same as previously</li>
+                                </ul>
+                                <h6>2nd stage: Filtering</h6>
+                                <ul>
+                                    <li>Apply business logic rules and filters to the retrieved candidate set</li>
+                                    <li>Examples include excluding out-of-stock items, age-restricted content, previously consumed items, and items with licensing limitations</li>
+                                </ul>
+                                <h6>3rd stage: Ranking</h6>
+                                <ul>
+                                    <li>Same as previously</li>
+                                </ul>
+                                <h6>4th stage: Ordering/Diversification</h6>
+                                <ul>
+                                    <li>Provide a diverse set of recommendations, including items outside the user's normal preferences, to prevent filter bubbles and encourage exploration</li>
+                                    <li>Align the final ranked list with additional business needs or constraints through an explicit ordering stage</li>
+                                </ul>
+                            </p>
+                        </div>
+
+                        <h6 class="mt-4"><u>Serving Diagram & Examples</u></h6>
+                        <p><div class="row overflow-row">
+                            <div class="col-sm d-flex justify-content-center align-items-center">
+                                <img src="/notes/2024-05-31-recsys/4-stage-diagram.png" class="img-fluid" style="max-height: 400px;">
+                            </div>
+                            <div class="col-sm d-flex justify-content-center align-items-center">
+                                <img src="/notes/2024-05-31-recsys/4-stage-examples.png" class="img-fluid" style="max-height: 400px;">
+                            </div>
+                        </div></p>
+
+                        <p class="px-3">
+                            While more complicated, this system has the advantage of providing a more <b>flexible</b> and <b>controllable</b> way to enforce business rules and constraints in the recommendation process
+                        </p>
+
+                        <h3 class="mt-4">Model Architectures</h3>
+                        <ul>
+                            <li>Retrieval and Ranking models can take various forms, including <b>matrix 
+                                factorization, linear models</b>, <b>tree-models</b> and <b>neural networks</b></li>
+                            <li>In these notes, I'll delve deeper into <b>two-tower models</b>, a popular and effective approach that has gained prominence in recent years</li>
+                            <li>Two-tower models have gained popularity for their ability to efficiently handle retrieval tasks, but they can also be effectively applied to ranking tasks</li>
+                            <li>Notable examples of two-tower model usage include <a href="https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/b9f4e78a8830fe5afcf2f0452862fb3c0d6584ea.pdf"><u>Google Play</u></a>'s retrieval,
+                                <a href="https://engineering.fb.com/2023/08/09/ml-applications/scaling-instagram-explore-recommendations-system/"><u>Instagram's Explore</u></a> feature (with
+                                <a href="https://instagram-engineering.com/powered-by-ai-instagrams-explore-recommender-system-7ca901d2a882"><u>multi-task multi-label neural networks</u></a> for ranking),
+                                <a href="https://medium.com/pinterest-engineering/pinterest-home-feed-unified-lightweight-scoring-a-two-tower-approach-b3143ac70b55"><u>Pinterest</u></a>'s,
+                                <a href="https://medium.com/expedia-group-tech/candidate-generation-using-a-two-tower-approach-with-expedia-group-traveler-data-ca6a0dcab83e"><u>Expedia</u></a>'s,
+                                <a href="https://eng.snap.com/embedding-based-retrieval"><u>Snap</u></a>'s Spotlight, and
+                                <a href="https://www.uber.com/blog/innovative-recommendation-applications-using-two-tower-embeddings/"><u>Uber</u></a>'s recommendation system
                             </li>
-                            <li>To address this problem, sparse IDs can be mapped to dense vector representations via an <b>embedding layer</b>, learned jointly with all other model parameters. The network requires fixed-sized dense inputs, and the researchers found that <b>averaging</b> the embeddings performed best among other strategies (sum, component-wise max, etc.)</li>
-                            <li>The averaged embeddings of a user's activity (e.g. watched videos) can finally serve as a <b>dense summary representation</b> of their history</li>
-                            <li>Example: If User A watched 1 video and User B watched 3 videos, User A has 1 video embedding, while User B has 3. To obtain one fixed-sized input, concatenating embeddings isn't possible; instead, averaging allows for one embedding per user, with the same dimensionality as the video embeddings, <b>regardless of the number of videos watched</b></li>
                         </ul>
-                    </div>
-                    <div class="col-sm d-flex justify-content-center align-items-center">
-                        <img src="/notes/2024-05-31-recsys/average-pooling.png" class="img-fluid" style="max-height: 300px;">
+
+                        <h4>What are Two-tower models?</h4>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="/notes/2024-05-31-recsys/two-tower-model.png" class="img-fluid" style="max-height: 250px;">
+                        </div>
+                        <ul>
+                            <li>Two-tower models are part of <b>neural deep retrieval (NDR)</b>, a latest modeling paradigm for retrieval</li>
+                            <li>A two-tower model consists of two separate <b>neural networks</b>, often referred to as "towers"</li>
+                            <li>Each tower processes query or item features to produce <b>embedding</b> representations, mapped to a <b>shared vector space</b>, allowing their similarities to be computed directly</li>
+                            <li>During training, the model learns to map queries and items to embeddings such that it maximizes the similarity between relevant pairs while minimizing similarity with irrelevant items</li>
+                            <li>Each tower learns layered representations of the input through successive network layers, transforming raw, multi-modal features to magnify useful information, filter out irrelevant data, 
+                                and capture complex data relationships
+                            </li>
+                        </ul>
+
+                        <h4>Why use Two-tower models?</h4>
+                        <ul>
+                            <li><u>Enhanced retrieval</u>: Embedding-based methods outperform traditional keyword-based techniques (like inverted n-grams) by capturing semantic similarity rather than exact matches</li>
+                            <li><u>Flexible modeling</u>: Decoupled query and item towers allow domain-specific feature selection and architectures, capturing complex, non-linear relationships in each domain</li>
+                            <li><u>Hybrid approach</u>: Combine collaborative filtering (query-item interactions) with content-based filtering (entity features) for better recommendation quality and generalization</li>
+                            <li><u>Feature flexibility</u>: Can leverage dense and sparse features (user profiles, historical engagements, metadata, context) for informative embeddings tailored to business goals</li>
+                            <li><u>Mitigate cold-start</u>: Unlike factorization models, can generate meaningful embeddings for new items without user interactions using content features</li>
+                            <li><u>Efficient inference</u>: Ability to decouple query and item inference</li>
+                            <ul>
+                                <li>Each tower only uses its respective input features to produce a vector, thereby the trained towers can be operationalized separately</li>
+                                <li>Decoupling inference of the towers for retrieval means we can precompute and cache vectors to reduce serving computation and latency</li>
+                                <li>It also means we can optimize each inference task independently</li>
+                            </ul>
+                        </ul>
+
+                        <p><div class="callout info">
+                            💡 <i>Key Benefits</i>
+                            <ul>
+                                <li>Superior performance via expressivity and generalization</li>
+                                <li>Adaptability to diverse features and business objectives</li>
+                                <li>Reduced cold-start: Conceptually, we can think of a new candidate embedding compiling all the content-based and collaborative filtering information learned from candidates with the same or similar feature values</li>
+                                <li>Optimization opportunities for serving latency and compute</li>
+                        </div></p>
+
+                        <h4>How to implement a Two-tower model?</h4>
+
+                        <figure>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="/notes/2024-05-31-recsys/two-tower-model-architecture.png" class="img-fluid" style="max-height: 250px;">
+                            </div> 
+                            <div class="text-center"><figcaption class="figure-caption">Google Play's retrieval model (2020)</figcaption></div>
+                        </figure>
+                        
+                        <h5>Problem Formulation</h5>
+                        <ul>
+                            <li>Two-tower models treat the retrieval problem as a <b>multi-class classification problem</b>, where the likelihood of suggesting an item from a large corpus (classes) <i>C</i> is formulated as a <b>softmax probability</b>:</li>
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="/notes/2024-05-31-recsys/softmax-probability.png" class="img-fluid" style="max-height: 75px;">
+                            </div>
+                            <li>Here, <i>ε(x,y)</i> is the <b>logit</b> (model output) for query <i>x</i> and item <i>y</i>, calculated as the inner product of their embeddings: 
+                                <b>ε(x,y) = ⟨u(x; θ), v(y; θ)⟩</b><br>where u(x; θ) is the query embedding and v(y; θ) is the item embedding, both parameterized by <i>θ</i></li>
+                        </ul>
+
+                        <h5 class="mt-5">Data</h5>
+                        <ul>
+                            <li>The YouTube paper emphasizes training a recommender on <b>diverse examples</b>, <b>not just those produced by recommendations</b>, to <b>mitigate exploitation bias</b> and quickly <b>propagate user discoveries via collaborative filtering</b></li>
+                            <li>Another key insight that improved live metrics was to generate a <b>fixed number of training examples per user</b> to prevent highly active users from dominating the loss function</li>
+                            <li>Two-tower models typically use <b>implicit engagement</b> data to build <b>positive user-item pairs</b> and <b>negative user-item pairs</b></li>
+                            <li>Implicit data is noisier but more <b>voluminous</b> than explicit feedback (often sparse), enabling deep-tail recommendations</li>
+                            <li>Missing interactions are considered potential negative signals (<b>missing-as-negatives strategy</b>), while interactions indicate positive signals</li>
+                            <li>User embeddings are learned from user history and context, which helps discriminate among items</li>
+                            <li>In practice, <b>sampling negative user-item pairs is sufficient</b>, as computing all would be computationally expensive (100x slower)</li>
+                            <li>There are two main approaches to efficiently implement negative sampling:
+                                <div class="row overflow-row">
+                                    <div class="col-sm-7">
+                                        <ul>
+                                            <li><u>In-batch negative sampling</u>
+                                            <ul>
+                                                <li>For a specific observation in a batch, consider every other observation in the same batch as negative</li>
+                                                <li>This can lead to <b>selection bias</b> (biased softmax during training), mitigated by subtracting the log of item sampling probabilities (i.e., the log probability of that item occurring within the data) from logit scores (before softmax) during training to adapt the loss</li>
+                                                <li>This technique is called <b>log Q correction</b> or sampled softmax in the literature</li>
+                                                <li>Applying the correction <b>significantly improves performance</b></li>
+                                                <li>Without log Q correction, popular items are penalized as they appear more frequently as negatives during training, leading to underrecommendation and lower-quality suggestions</li>
+                                            </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm d-flex justify-content-center align-items-center">
+                                        <img src="/notes/2024-05-31-recsys/in-batch-negative-sampling.png" class="img-fluid" style="max-height: 300px;">
+                                    </div>
+                                </div>
+                                <div class="row overflow-row">
+                                    <div class="col-sm-7">
+                                        <ul>
+                                            <li><u>Mixed Negative Sampling (MNS)</u>
+                                            <ul>
+                                                <li>Sample <b>uniformly</b> from all items to address the problem that in-batch sampled softmax never generates negatives from uninteracted items, penalizing and lacking resolution for unpopular, fresh or long-tail items</li>
+                                                <li>Append zeros to the right of the label matrix to <b>include non-interacted items in softmax</b></li>
+                                                <li>MNS outperforms many baseline sampling methods by <b>tackling selection bias</b> in implicit user feedback</li>
+                                                <li>Batch B' (<b>a hyperparameter</b>) contains items with <b>no interaction</b> with queries in batch B</li>
+                                                <li>In practice, batch B' comes from an index with precomputed features; during training, each batch picks from this source</li>
+                                                <li>Google's paper (2020) shows <b>diminishing returns for B'</b>: larger B' improves results via larger sample size but may approximate uniform distribution beyond a certain point, deviating from serving time distribution and hurting performance. Also, increasing B' raises training costs, requiring a <b>trade-off</b></li>
+                                            </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-sm d-flex justify-content-center align-items-center">
+                                        <img src="/notes/2024-05-31-recsys/mixed-negative-sampling.png" class="img-fluid" style="max-height: 300px;">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <p><div class="callout info">
+                            🚧 <i>Caution</i>: When using negative sampling, it is important to handle the cases of <b>accidental hits</b> where identical positive queries appear in the same batch. This can <b>falsely</b> label other items as negative, <b>contradicting their true positive status</b>
+                        </div></p>
+
+                        <h5 class="mt-5">Feature Engineering</h5>
+                        <b>Overview</b>
+                        <ul>
+                            <li>Two-tower models can handle <b>multi-modal</b> features (text, image, sound, etc.), <b>sparse</b> features and <b>dense</b> features</li>
+                            <li>These features are first converted into <b>vector</b> representations which can be <b>concatenated</b> and passed to subsequent model layers</li>
+                        </ul>
+                        <b>Vectorization Methods</b>
+                        <ul>
+                            <li><u>Text features</u>: can be generated by using a <b>text vectorizer</b> if meaningful, or <b>hashing</b> otherwise</li>
+                            <li><u>Numeric features</u>: can be <b>normalized</b> or <b>discretized</b></li>
+                            <li><u>Pre-trained embeddings</u>: can be directly used without transformation</li>
+                        </ul>
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="/notes/2024-05-31-recsys/feature-engineering.png" class="img-fluid" style="max-height: 450px;">
+                        </div> 
+                        <p><div class="callout info">
+                            ☝️ <i>Notes</i>
+                            <br>- Normalizing continuous input features is crucial for neural network <b>convergence</b>; <b>quantile normalization</b> was used before training in the Youtube paper for instance
+                            <br>- Instead of preprocessing, some models apply transformations during training itself. For example, a <b>batch normalization</b> layer after numerical inputs can standardize them, as seen in TabNet.
+                            The <a href="https://storage.googleapis.com/pub-tools-public-publication-data/pdf/a7f0822e77e8b6b4c00c879707fe60e3955d4a03.pdf"><u>DASALC</u></a> model also uses raw features and applies transformations (Log, BN) during training, avoiding a separate preprocessing stage
+                        </div></p>
+                        <b>Handling variable-length signals</b>
+                        <div class="row overflow-row">
+                            <div class="col-sm-8">
+                                <ul>
+                                    <li><b>User activity</b> data like purchase history and page views provides valuable input signals for building recommender models</li>
+                                    <li>However, users exhibit <b>varying</b> behavior, and activity is a sequence of events with <b>different lengths</b> across users. For instance, 
+                                        in the Youtube paper, a user's watch history is represented by a variable-length sequence of sparse video IDs
+                                    </li>
+                                    <li>To address this problem, sparse IDs can be mapped to dense vector representations via an <b>embedding layer</b>, learned jointly with all other model parameters. The network requires fixed-sized dense inputs, and the researchers found that <b>averaging</b> the embeddings performed best among other strategies (sum, component-wise max, etc.)</li>
+                                    <li>The averaged embeddings of a user's activity (e.g. watched videos) can finally serve as a <b>dense summary representation</b> of their history</li>
+                                    <li>Example: If User A watched 1 video and User B watched 3 videos, User A has 1 video embedding, while User B has 3. To obtain one fixed-sized input, concatenating embeddings isn't possible; instead, averaging allows for one embedding per user, with the same dimensionality as the video embeddings, <b>regardless of the number of videos watched</b></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm d-flex justify-content-center align-items-center">
+                                <img src="/notes/2024-05-31-recsys/average-pooling.png" class="img-fluid" style="max-height: 300px;">
+                            </div>
+                        </div>
+                        <b>Common features</b>
+                        <ul>
+                            <li><u>Demographic data</u> provide <b>priors</b> for reasonable recommendations to new users</li>
+                            <li><u>User's geographic region and device information</u> can be embedded and concatenated</li>  
+                            <li><u>Binary (gender, login status) and continuous features (age)</u> can be normalized between [0, 1(</li>
+                            <li><u>Item age</u>: The Youtube paper showed that incorporating item age since availability improves recommendations for <b>new and viral</b> contents. Trained models can accurately <b>capture time-dependant popularity patterns</b>, avoiding an inherent bias towards older videos. This allows the recommendation system to prioritize recently uploaded videos that users are more likely to engage with, even if they don't have a large viewership history yet</li>
+                            <li><u>Frequency features</u>: Features describing past item impressions are critical for introducing <b>"churn"</b> in recommendations, ensuring <b>successive requests don't return identical lists</b>.
+                                If a user was recently recommended an item but did not click/purchase it, then the model should naturally demote this item on the next page load</li>
+                            <li><u>Embedding strategy</u>: Use the <b>same</b> underlying embedding for same categorical IDs to improve <b>generalizatio</b>n, <b>speed up training</b>, and <b>reduce memory requirements</b>. For example, use the same embedding for video ID features (impression, last watched, seed) if they're all the same</li>
+                            <li><u>Super/sub-linear features</u>: The YouTube paper found that adding <b>squared</b> and <b>square-rooted</b> versions of the normalized continuous features improved the model's expressive power. This allowed the network to easily model super-linear and sub-linear feature transformations. Providing these powered feature variants as inputs <b>enhanced offline accuracy</b></li>
+                            <li><u>Seed item</u>: Seed item features can help predict next item preferences. For instance, seed app features help predict the next app installed for Google's Play</li>
+                        </ul>
+
+                        <h5 class="mt-5">Model Architecture</h5>
+                        <b>Dense/MLP layers</b>
+                        <ul>
+                            <li>Most popular and basic component of Two-tower models</li>
+                            <li>Adding more dense layers after concatenating embeddings can improve model expressiveness by allowing learning of successive feature representations</li>
+                            <li>The Youtube paper experimented with different depths to select the optimal number where diminishing returns appear</li>
+                        </ul>
+                        <b>Cross layers</b>
+                        <ul>
+                            <li>Include cross layers after embeddings to explicitly model feature interactions before combining with dense layers that implicitly model interactions</li>
+                            <li>Cross layers often boost performance but increase computational complexity</li>
+                            <li>Evaluate parallel vs stacked implementations of cross and dense layers for best results</li>
+                        </ul>
+                        <b>Self-attention</b>
+                        <ul>
+                            <li>Use self-attention to encode user history sequences, similar to word sequences</li>
+                        </ul>
+                        <b>L2 Normalization</b>
+                        <ul>
+                            <li>Adding an L2 norm layer at the output can improve performance in some cases</li>
+                            <li>Relates to computing cosine similarity via dot product between final embeddings</li>
+                        </ul>
+
+                        <h5 class="mt-5">Loss</h5>
+                        <ul>
+                            <li>Cross entropy loss (or negative log likelihood)</li>
+                        </ul>
+
+                        <h5 class="mt-5">Evaluation</h5>
+                        <ul>
+                            <li>To avoid data leakage, use a <b>temporal split</b> to separate training and evaluation datasets. For example, train on 30 days of logged data and evaluate on the 31st day</li>
+                            <li>To account for <b>seasonality</b>, evaluations can be repeated over a <b>rolling window</b> and the results averaged. Example: To account for weekly patterns, train on a 30-day window, evaluating on day 31; then, repeat the evaluation 7 times, shifting the window by one day each time</li>
+                            <li>Retrieval models are typically optimized for <b>recall</b> and evaluated using <b>Recall@K</b>. This measures whether a relevant item is among the top K recommended items</li>
+                        </ul>
+
+                        <h5 class="mt-5">Serving</h5>
+                        <div class="col-sm d-flex justify-content-center align-items-center">
+                            <p><video src="https://raw.githubusercontent.com/bt2513/bt2513.github.io/main/notes/2024-05-31-recsys/two-tower-system.mov" class="img-fluid" autoplay loop muted style="max-height: 250px;"></video></p>
+                        </div>
+                        <b>Typical workflow</b>
+                        <ul>
+                            <li><u>Model training</u>: Train two-tower model offline, saving towers separately</li>
+                            <li><u>Item Tower deployment</u>: Upload the trained item tower to a Model Registry</li>
+                            <li><u>Batch predictions</u>: Run a GPU-accelerated batch job to precompute item embeddings</li>
+                            <li><u>Cache deployment</u>: Compress item embeddings into an ANN (Approximate Nearest Neighbors) index optimized for low-latency retrieval, and deploy it to an endpoint for serving</li>
+                            <li><u>Query Tower deployment</u>: Deploy trained query tower for real-time GPU-accelerated query embedding generation</li>
+                            <li><u>Search and retrieval</u>: Use query embedding to retrieve the N nearest candidate embeddings from the index, then return product IDs using a Matching Engine</li>
+                        </ul>
+                        <p><div class="callout info">
+                            💡 <i>Optimization</i>:Precomputing and storing query embeddings alongside item embeddings can save computation at inference time, but may use stale data.
+                            For large item sets, this approach can unlock extra compute for ranking, potentially increasing precision
+                        </div></p>
+                        <p class="px-3 pb-5">
+                            ☝️ <i>Note</i>: For large item sets of millions or billions of vectors, nearest neighbor search is often a bottleneck for low-latency inference.
+                            ANN calculations optimize nearest neighbor search accuracy in a fraction of the time required for exhaustive searches. This is achieved through quantization-based hashing 
+                            and tree search algorithms
+                        </p>
+
+                        <!-- RESSOURCES  -->
+                        <hr>
+
+                        <h5>Resources</h5>
+                        <ul>
+                            <li><a href="https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/b9f4e78a8830fe5afcf2f0452862fb3c0d6584ea.pdf"><u>Mixed Negative Sampling for Learning Two-tower Neural Networks in Recommendations (Google paper, 2020)</u></a></li>
+                            <li><a href="https://medium.com/nvidia-merlin/recommender-systems-not-just-recommender-models-485c161c755e"><u>Recommender Systems, Not Just Recommender Models (NVIDIA Merlin, 2022)</u></a></li>
+                            <li><a href="https://eugeneyan.com/writing/system-design-for-discovery/"><u>System Design for Recommendations and Search (by Eugene Yan, 2022)</u></a></li>
+                            <li><a href="https://cloud.google.com/blog/products/ai-machine-learning/scaling-deep-retrieval-tensorflow-two-towers-architecture"><u>Scaling deep retrieval with Two-tower models (Google's Blog, 2023)</u></a></li>
+                        </ul>
+
                     </div>
                 </div>
-                <b>Common features</b>
-                <ul>
-                    <li><u>Demographic data</u> provide <b>priors</b> for reasonable recommendations to new users</li>
-                    <li><u>User's geographic region and device information</u> can be embedded and concatenated</li>  
-                    <li><u>Binary (gender, login status) and continuous features (age)</u> can be normalized between [0, 1(</li>
-                    <li><u>Item age</u>: The Youtube paper showed that incorporating item age since availability improves recommendations for <b>new and viral</b> contents. Trained models can accurately <b>capture time-dependant popularity patterns</b>, avoiding an inherent bias towards older videos. This allows the recommendation system to prioritize recently uploaded videos that users are more likely to engage with, even if they don't have a large viewership history yet</li>
-                    <li><u>Frequency features</u>: Features describing past item impressions are critical for introducing <b>"churn"</b> in recommendations, ensuring <b>successive requests don't return identical lists</b>.
-                        If a user was recently recommended an item but did not click/purchase it, then the model should naturally demote this item on the next page load</li>
-                    <li><u>Embedding strategy</u>: Use the <b>same</b> underlying embedding for same categorical IDs to improve <b>generalizatio</b>n, <b>speed up training</b>, and <b>reduce memory requirements</b>. For example, use the same embedding for video ID features (impression, last watched, seed) if they're all the same</li>
-                    <li><u>Super/sub-linear features</u>: The YouTube paper found that adding <b>squared</b> and <b>square-rooted</b> versions of the normalized continuous features improved the model's expressive power. This allowed the network to easily model super-linear and sub-linear feature transformations. Providing these powered feature variants as inputs <b>enhanced offline accuracy</b></li>
-                    <li><u>Seed item</u>: Seed item features can help predict next item preferences. For instance, seed app features help predict the next app installed for Google's Play</li>
-                </ul>
-
-                <h5 class="mt-5">Model Architecture</h5>
-                <b>Dense/MLP layers</b>
-                <ul>
-                    <li>Most popular and basic component of Two-tower models</li>
-                    <li>Adding more dense layers after concatenating embeddings can improve model expressiveness by allowing learning of successive feature representations</li>
-                    <li>The Youtube paper experimented with different depths to select the optimal number where diminishing returns appear</li>
-                </ul>
-                <b>Cross layers</b>
-                <ul>
-                    <li>Include cross layers after embeddings to explicitly model feature interactions before combining with dense layers that implicitly model interactions</li>
-                    <li>Cross layers often boost performance but increase computational complexity</li>
-                    <li>Evaluate parallel vs stacked implementations of cross and dense layers for best results</li>
-                </ul>
-                <b>Self-attention</b>
-                <ul>
-                    <li>Use self-attention to encode user history sequences, similar to word sequences</li>
-                </ul>
-                <b>L2 Normalization</b>
-                <ul>
-                    <li>Adding an L2 norm layer at the output can improve performance in some cases</li>
-                    <li>Relates to computing cosine similarity via dot product between final embeddings</li>
-                </ul>
-
-                <h5 class="mt-5">Loss</h5>
-                <ul>
-                    <li>Cross entropy loss (or negative log likelihood)</li>
-                </ul>
-
-                <h5 class="mt-5">Evaluation</h5>
-                <ul>
-                    <li>To avoid data leakage, use a <b>temporal split</b> to separate training and evaluation datasets. For example, train on 30 days of logged data and evaluate on the 31st day</li>
-                    <li>To account for <b>seasonality</b>, evaluations can be repeated over a <b>rolling window</b> and the results averaged. Example: To account for weekly patterns, train on a 30-day window, evaluating on day 31; then, repeat the evaluation 7 times, shifting the window by one day each time</li>
-                    <li>Retrieval models are typically optimized for <b>recall</b> and evaluated using <b>Recall@K</b>. This measures whether a relevant item is among the top K recommended items</li>
-                </ul>
-
-                <h5 class="mt-5">Serving</h5>
-                <div class="col-sm d-flex justify-content-center align-items-center">
-                    <p><video src="https://raw.githubusercontent.com/bt2513/bt2513.github.io/main/notes/2024-05-31-recsys/two-tower-system.mov" class="img-fluid" autoplay loop muted style="max-height: 250px;"></video></p>
-                </div>
-                <b>Typical workflow</b>
-                <ul>
-                    <li><u>Model training</u>: Train two-tower model offline, saving towers separately</li>
-                    <li><u>Item Tower deployment</u>: Upload the trained item tower to a Model Registry</li>
-                    <li><u>Batch predictions</u>: Run a GPU-accelerated batch job to precompute item embeddings</li>
-                    <li><u>Cache deployment</u>: Compress item embeddings into an ANN (Approximate Nearest Neighbors) index optimized for low-latency retrieval, and deploy it to an endpoint for serving</li>
-                    <li><u>Query Tower deployment</u>: Deploy trained query tower for real-time GPU-accelerated query embedding generation</li>
-                    <li><u>Search and retrieval</u>: Use query embedding to retrieve the N nearest candidate embeddings from the index, then return product IDs using a Matching Engine</li>
-                </ul>
-                <p><div class="callout info">
-                    💡 <i>Optimization</i>:Precomputing and storing query embeddings alongside item embeddings can save computation at inference time, but may use stale data.
-                    For large item sets, this approach can unlock extra compute for ranking, potentially increasing precision
-                </div></p>
-                <p class="px-3 pb-5">
-                    ☝️ <i>Note</i>: For large item sets of millions or billions of vectors, nearest neighbor search is often a bottleneck for low-latency inference.
-                    ANN calculations optimize nearest neighbor search accuracy in a fraction of the time required for exhaustive searches. This is achieved through quantization-based hashing 
-                    and tree search algorithms
-                </p>
-
-                <!-- RESSOURCES  -->
-                <hr>
-
-                <h5>Resources</h5>
-                <ul>
-                    <li><a href="https://storage.googleapis.com/gweb-research2023-media/pubtools/pdf/b9f4e78a8830fe5afcf2f0452862fb3c0d6584ea.pdf"><u>Mixed Negative Sampling for Learning Two-tower Neural Networks in Recommendations (Google paper, 2020)</u></a></li>
-                    <li><a href="https://medium.com/nvidia-merlin/recommender-systems-not-just-recommender-models-485c161c755e"><u>Recommender Systems, Not Just Recommender Models (NVIDIA Merlin, 2022)</u></a></li>
-                    <li><a href="https://eugeneyan.com/writing/system-design-for-discovery/"><u>System Design for Recommendations and Search (by Eugene Yan, 2022)</u></a></li>
-                    <li><a href="https://cloud.google.com/blog/products/ai-machine-learning/scaling-deep-retrieval-tensorflow-two-towers-architecture"><u>Scaling deep retrieval with Two-tower models (Google's Blog, 2023)</u></a></li>
-                </ul>
-
+                <div class="col-sm"></div>
             </div>
         </div>
 
         <!-- FOOTER -->
         <footer class="footer">
-            <div class="container text-center">
+            <div class="container text-center mt-4">
                 <span>&copy; 2024 <a href="https://bt2513.github.io/">Bertrand's Notes</a></span>
             </div>
         </footer>
